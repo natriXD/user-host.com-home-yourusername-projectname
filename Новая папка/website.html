@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TitanLab</title>
+    <style>
+        html {
+            overflow-x: hidden;
+        }
+        
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            /* Измените значение на необходимое вам */
+            margin: 0 auto;
+            /* Центрирует контент по горизонтали */
+        }
+        
+        header {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 0;
+            color: #fff;
+            z-index: 1;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .header-image {
+            margin-right: 41.5%;
+            /* Регулирует расстояние между картинкой и заголовком */
+            width: 50px;
+        }
+        
+        .header-title {
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .header-actions {
+            margin-left: auto;
+            /* Делает корзину и кнопку справа от заголовка */
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-icon {
+            margin-right: 10px;
+            /* Регулирует расстояние между иконкой корзины и кнопкой */
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: 40px;
+            right: 240px;
+            background-color: rgb(47, 0, 255);
+            color: rgb(255, 255, 255);
+            padding: 5px;
+            border-radius: 50%;
+            font-size: 7px;
+        }
+        
+        .leave-request-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        nav {
+            overflow-x: hidden;
+            background-color: #c0c0c0;
+            text-align: center;
+            justify-content: space-around;
+            /* Выравнивание элементов по горизонтали */
+            border: none;
+            cursor: pointer;
+            /* Плавное изменение цвета фона при наведении */
+            font-weight: bold;
+            background-color: #cccccc;
+            position: fixed;
+            top: 80px;
+            /* Выравниваем навигацию с учетом высоты заголовка */
+            left: 0;
+            width: 100%;
+            display: flex;
+            color: #fff;
+            z-index: 1;
+        }
+        
+        .nav-item {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 21px;
+            line-height: 24px;
+            letter-spacing: 0.12em;
+            color: #111111;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(207, 207, 207, 0.822);
+            /* Фоновый цвет блока */
+            padding: 10px;
+            /* Поля вокруг блока */
+            border-radius: 20px;
+            /* Скругление углов */
+            transition: color 1s;
+            /* Плавный переход цвета фона */
+            transition: background-position 0.5s;
+            font-family: Arial Black;
+            padding: 10px;
+        }
+        
+        nav a:hover,
+        .nav-item.active {
+            color: #000000;
+            background-color: rgb(187, 187, 187);
+        }
+        
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 20px;
+            transition: color 1s;
+            transition: width 1s ease;
+        }
+        
+        main {
+            padding: 0px;
+        }
+        
+        footer {
+            background-color: #adadad;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .product-description {
+            text-align: left;
+        }
+        
+        .product-description p {
+            margin: 0;
+            text-indent: 70px;
+            /* Убираем внешний отступ у абзацев для более компактного размещения */
+        }
+        
+        .services-section {
+            background-color: #ffffff;
+            padding: 60px;
+            border-radius: 10px;
+            top: 500px;
+        }
+        
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .feature-section {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f8f8f800;
+        }
+        
+        .imagenavigation {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Это сохранит пропорции изображения */
+            padding-top: 100px;
+        }
+        
+        .feature-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            position: relative;
+        }
+        
+        .additional-info {
+            display: block;
+            margin-left: 5px;
+        }
+        
+        .feature-item.delivery::before {
+            background-image: url('Доставка.png');
+        }
+        
+        .title {
+            font-weight: bold;
+            color: black;
+        }
+        
+        .additional-info {
+            display: table;
+            margin: 0 auto;
+            /* для центрирования display: table; не нужно указывать ширину блока, она рассчитывается самостоятельно */
+            white-space: pre-line;
+            /* не нужен <br> */
+            word-wrap: break-word;
+            /* чтобы слова переносились на маленьком экране */
+            margin-right: 50%;
+        }
+        
+        .product-section {
+            text-align: start;
+        }
+        
+        .product-block {
+            display: inline-block;
+            background-color: #f0f0f0;
+            /* Фоновый цвет блока */
+            padding: 20px;
+            /* Поля вокруг блока */
+            border-radius: 8px;
+            /* Скругление углов */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Тень блока */
+            text-align: center;
+            margin-left: 100px;
+            font-family: VERDANA;
+        }
+        
+        .product-block img {
+            width: auto;
+            /* Размер изображения */
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #979797;
+            /* Цвет фона кнопки */
+            color: white;
+            /* Цвет текста кнопки */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            /* Плавное изменение цвета фона при наведении */
+            width: 100%;
+            font-family: "ms sans serif", sans-serif;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+            /* Цвет фона при наведении */
+        }
+        
+        .product-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .title-product {
+            font-size: 30px;
+            margin-left: 80px;
+            padding: 20px;
+        }
+        
+        .colored-section {
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        
+        footer {
+            background-color: #d6d6d6;
+            color: white;
+            text-align: center;
+            width: 100%;
+            font-weight: 700;
+        }
+        
+        .rating {
+            font-weight: bold;
+        }
+        
+        section {
+            text-align: center;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 10px;
+            padding: 30px;
+        }
+        
+        .section-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-direction: column;
+        }
+        
+        .additional-info {
+            font-size: 30px;
+        }
+        
+        .reviews-section {
+            background-color: #e6e6e6;
+            padding: 20px;
+        }
+        
+        .review-card {
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            display: inline-block;
+            text-align: left;
+            background-color: #f3f3f3ef;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 50px;
+            margin-left: 120px;
+        }
+        
+        .review-author {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .review-text {
+            text-align: center;
+            align-items: stretch;
+        }
+        
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .star {
+            color: #fdd835;
+            /* Цвет активных звезд */
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        
+        .inactive-star {
+            color: #ccc;
+            /* Цвет неактивных звезд */
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        
+        .review-info {
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .cart img {
+            width: auto;
+            height: auto;
+            margin-right: 20px;
+            fill: rgb(4, 0, 255);
+            /* Цвет иконки корзины */
+            position: relative;
+        }
+        
+        .info-text {
+            text-align: center;
+            font-size: 24px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            /* Положим окно поверх мутного фона */
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background-color: rgba(182, 182, 182, 0.5);
+            padding: 30px;
+            border-radius: 60px;
+            text-align: center;
+        }
+        
+        .modal-content p {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .form-input {
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            text-align: left;
+            margin-left: 300px;
+            font-weight: bold;
+            color: black;
+        }
+        
+        .social-icons {
+            text-align: left;
+            margin-left: 300px;
+        }
+        
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .cart-content {
+            display: none;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        
+        .cart-content p {
+            margin: 0;
+        }
+        
+        .cart-count {
+            background-color: #ff0000;
+            color: #ffffff;
+            padding: 5px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+        
+        .primary-button,
+        .secondary-button {
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 0 5px;
+            padding: 5px 20;
+            /* Расстояние между кнопками */
+            font-size: 14px;
+            /* Rectangle 18 */
+            width: 200px;
+            height: 40px;
+            left: 406px;
+            background: #000000;
+            border-radius: 4px;
+        }
+        
+        .info-age {
+            font-size: 10px;
+            padding: 10px;
+        }
+        
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(133, 133, 133, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            /* Положим окно поверх мутного фона */
+            backdrop-filter: blur(10px);
+        }
+        
+        .close {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            cursor: pointer;
+            font-size: 20px;
+            color: #d8d8d8;
+            padding: 10px;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+        
+        .form-container {
+            max-width: 300px;
+            border-radius: 40px;
+            font-size: 24px;
+            margin-left: 40%;
+            margin-top: 15%;
+            background-color: rgba(179, 177, 177, 0.5);
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .form-container label {
+            display: block;
+            margin: 10px 0;
+        }
+        
+        .form-container input[type=text],
+        .form-container input[type=text],
+        .form-container input[type=telegram],
+        .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 10px 0;
+            display: inline-block;
+            border-radius: 50px solid #000000;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 14px;
+            background-color: rgba(218, 218, 218, 0.5);
+            z-index: 1;
+        }
+        
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            width: 70%;
+        }
+        
+        .form-container button:hover {
+            opacity: 0.8;
+        }
+        
+        #prev-btn,
+        #next-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        #prev-btn:hover,
+        #next-btn:hover {
+            color: #4CAF50;
+        }
+        
+        .cart-container {
+            display: none;
+            /* Начинаем с скрытой корзины */
+            position: fixed;
+            /* Вы можете настроить положение корзины */
+            top: 10%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-container {
+            /* Ваши стили для контейнера с картинкой */
+            position: relative;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .column a {
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .column img {
+            max-width: 100px;
+            /* Регулируйте размер изображения по вашему усмотрению */
+            margin-right: 10px;
+            /* Расстояние между изображением и текстом */
+        }
+        
+        .title-document {
+            font-size: 24px;
+            font-family: Arial Black;
+        }
+        
+        .prev-btn,
+        .next-btn {
+            /* Ellipse 71 */
+            position: absolute;
+            width: 37px;
+            height: 37px;
+            left: 72%;
+            top: 50%;
+            background-color: rgba(80, 80, 80, 0.58);
+            backdrop-filter: blur(15.65px);
+            /* Note: backdrop-filter has minimal browser support */
+        }
+        
+        .slider {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s;
+        }
+        
+        .prev-btn,
+        .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgb(2, 2, 2);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1;
+            background-color: rgba(80, 80, 80, 0.58);
+        }
+        
+        .prev-btn {
+            left: 0;
+        }
+        
+        .next-btn {
+            right: 0;
+        }
+        
+        .prev-btn {
+            left: 10px;
+        }
+        
+        .next-btn {
+            right: 10px;
+            margin-left: 25%;
+        }
+    </style>
+</head>
+
+
+<body>
+    <header>
+        <div class="header-content" id="header">
+            <img src="ap23pa.png" alt="Your Image" class="header-image">
+            <font size="6" color="black" face="Arial black">TITAN LAB</font>
+            <div class="header-actions">
+                <div class="cart">
+                    <img src="Vector.png" alt="Корзина" id="cart-image" onmouseover="showCart()" onmouseout="hideCart()">
+                    <div class="cart" id="cart">
+                        <span id="cart-count">0</span>
+
+                    </div>
+
+
+
+                </div>
+                <button onclick="openForm()">Оставить Заявку</button>
+
+                <div id="myForm" class="form-popup" style="display: none;">
+                    <div class="form-content" style="z-index: 9999;">
+                        <span class="close" onclick="closeForm() ">&times;</span>
+                        <form action="/submit" class="form-container">
+                            <h2>Оставить заявку</h2>
+                            <input type="text" placeholder="Ваше имя*" name="name" required>
+                            <input type="text" placeholder="Номер телефона*" name="phone" required>
+                            <input type="text" placeholder="Телеграм для связи*" name="telegram" required>
+                            <button type="submit" class="btn">Отправить</button>
+
+                        </form>
+                    </div>
+                </div>
+    </header>
+    <div id="ageModal" class="modal" style="z-index: 3;">
+        <div class="modal-content">
+            <img class="image-content" src="лого с названием.png" alt="logo">
+            <p>Подтвердите что Вам больше 18 лет.</p>
+            <div class="button-container">
+                <button class="primary-button" onclick="confirmAge()">Мне больше 18 лет</button>
+                <button class="secondary-button" onclick="rejectAge()">Мне меньше 18 лет</button>
+            </div>
+            <div class="info-age">
+                <h1>Сайт носит информационный характер и не рекламирует табачную продукцию. Вся информация представлена в целях ознакомления,<br> а не агитации или рекламирования товара.<br></h1>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <nav>
+        <a class="nav-item active" href="#header">Главная</a>
+        <a class="nav-item" href="#product">Каталог</a>
+        <a class="nav-item" href="#contact">Контакты</a>
+        <a class="nav-item" href="#review">Отзывы</a>
+        <a class="nav-item" href="#about-company">О Компании</a>
+
+    </nav>
+    <div class="slider-container">
+        <div class="slider">
+            <img class="imagenavigation" src="370d6633-4c4d-402e-a1a4-f31d19c551e6.jpg" alt="ElfBar">
+            <img class="imagenavigation" src="f49c6492-f23b-4253-8eaa-b456ca3ce0d4.jpg" alt="Image 2">
+            <img class="imagenavigation" src=".png" alt="Image 3">
+        </div>
+    </div>
+    <button class="prev-btn" onclick="changeSlide(-1)">&#9664;</button>
+    <button class="next-btn" onclick="changeSlide(1)">&#9654;</button>
+
+
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-item delivery">
+                <img class="feature-item.delivery::before" src="Доставка.png" alt="ElfBar" style="margin: 20px;">
+                <p>
+                    <font size="5" color="black" face="Arial black">Доставка</font> <span class="additional-info" style="font-size: 20px;">Дополнительная<br> информация<br></span>
+                </p>
+            </div>
+            <div class="feature-item quality-guarantee">
+
+                <img class="feature-item.delivery::before" src="Галочка.png" alt="ElfBar" style="margin: 20px;">
+                <p>
+                    <font size="5" color="black" face="Arial black">Гарантия качества</font> <span class="additional-info" style="font-size: 20px;">Дополнительная<br> информация<br></span>
+
+
+                </p>
+            </div>
+
+            <div class="feature-item discount">
+                <img class="feature-item.delivery::before" src="Скидка.png" alt="ElfBar" style="margin: 20px;">
+                <p>
+
+                    <font size="5" color="black" face="Arial black">Скидка 10%</font> <span class="additional-info " style="font-size: 20px;">Дополнительная<br> информация<br></span>
+                </p>
+
+            </div>
+        </div>
+    </section>
+    <section class=" product-section " id="product">
+        <h2 class="title-product " style="font-family: Arial Black;">Электронные сигареты</h2>
+        <div class="product-block ">
+            <img src="f49c6492-f23b-4253-8eaa-b456ca3ce0d4.jpg " alt="Product 1 ">
+            <p class="product-title ">WAKA</p>
+            <button>Подробнеe</button>
+        </div>
+        <div class="product-block ">
+            <img src="a1953caa-c3a4-40a9-94f6-0f6d27f94d2e (1).jpg " alt="Product 1 ">
+            <p class="product-title ">PLONQ</p>
+            <button>Подробнее</button>
+        </div>
+        <div class="product-block ">
+            <img src=" " alt="Product 1 ">
+            <p class="product-title "></p>
+            <button>Подробнее</button>
+        </div>
+        <div class="product-block ">
+            <img src=" " alt="Product 1 ">
+            <p class="product-title "></p>
+            <button>Подробнее</button>
+        </div>
+        <section class="product-section ">
+            <h2 class="title-product " style="font-family: Arial Black;">Жевательный табак</h2>
+            <div class="product-block ">
+                <img src="01bf5b87-ace8-4c88-8f46-5b9990d8db36.jpg " alt="Product 1 ">
+                <p class="product-title ">ODENS</p>
+                <button>Подробнее</button>
+            </div>
+            <div class="product-block ">
+                <img src="08a0a356-032c-4626-abe3-4b4f5d5ba2a8 (1).jpg " alt="Product 1 ">
+                <p class="product-title ">SIBERIA</p>
+                <button onclick="openProductDetails()">Подробнее</button>
+            </div>
+
+
+            <section class="product-section ">
+                <h2 class="title-product " style="font-family: Arial Black;">IQOS</h2>
+                <div class="product-block ">
+                    <img src="80b43fb3-9cd7-431b-a737-e1ffd177a62c.jpg " alt="Product 1 ">
+                    <p class="product-title ">ILUMA</p>
+                    <button>Подробнее</button>
+                </div>
+                <div class="product-block ">
+                    <img src="7ec293ac-387f-4733-a21b-c3cc80600382.jpg " alt="Product 1 ">
+                    <p class="product-title ">ILUMA PRIME</p>
+
+                    <button>Подробнее</button>
+
+                </div>
+
+
+                <section class="product-section ">
+                    <h2 class="title-product " style="font-family: Arial Black;">Стики</h2>
+                    <div class="product-block ">
+                        <img src="5e51c64d-e879-4071-9105-bae4ac24d567.jpg " alt="Product 1 ">
+                        <p class="product-title ">TEREA</p>
+                        <button>Подробнее</button>
+                    </div>
+                    <section class="about-company-section ">
+                        <h2 class="section-title " style="font-family: Arial Black;" id="about-company">О компании</h2>
+                        <div class="section-content ">
+
+
+                            <div class="info-text " style="font-family: trebuchet ms;">Titan Lab - это компания занимающаяся оптовыми и розничными продажами с 2018 года. На нашем счету уже более 1000 успешных сделок и 99% положительных отзывов от покупателей. Наша команда тщательно подходит к выбору товара. Именно
+                                поэтому мы работаем напрямую с производителями, что дает гарантию качества нашей продукции. В нашем ассортименте более 500 позиций различных табачных изделий и электронных девайсов: от всеми известных до эксклюзивных брендов.
+                                Вся лучшая табачная продукция и девайсы для курения собраны в одном месте, чтобы сделать ваш выбор проще и доступнее. Накопленные знания помогают уверенно подбирать для вас продукцию по вкусу и крепости, под настроение
+                                и желания.</div>
+                        </div>
+                        <h1 class=" review-info " id="rewiew " style="font-family: Arial Black; " id="review">Отзывы</h1>
+                        <div class="review-card ">
+
+
+                            <img class="review-avatar " src="Доставка.png " alt="User 1 Avatar ">
+                            <div class="review-author ">ДЫМДымский</div>
+                            <div class="star-rating ">
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                            </div>
+                            <div class="review-text " style="font-family: trebuchet ms; "><br>Заказала себе недавно электронные сигареты WAKA и осталась очень довольна!<br> Во-первых, устройство отличается крутым дизайном и удобной формой, во-вторых, были на связи в течении всей цепочки от оплаты счета до сверения
+                                кодов. Рекомендую всем, кто переходит на работу в белую. Доставили через 7 дней, как и говорили. Доставкой довольна.</div>
+                        </div>
+                        <div class="review-card ">
+
+
+                            <img class="review-avatar " src="Доставка.png " alt="User 1 Avatar ">
+                            <div class="review-author ">ДЫМДымский</div>
+                            <div class="star-rating ">
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                            </div>
+                            <div class="review-text " style="font-family: trebuchet ms; "><br>Заказала себе недавно электронные сигареты WAKA и осталась очень довольна!<br> Во-первых, устройство отличается крутым дизайном и удобной формой, во-вторых, были на связи в течении всей цепочки от оплаты счета до сверения
+                                кодов. Рекомендую всем, кто переходит на работу в белую. Доставили через 7 дней, как и говорили. Доставкой довольна.</div>
+                        </div>
+                        <div class="review-card ">
+
+
+                            <img class="review-avatar " src="Доставка.png " alt="User 1 Avatar ">
+                            <div class="review-author ">ДЫМДымский</div>
+                            <div class="star-rating ">
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Активная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                                <span class="star ">&#9733;</span>
+                                <!-- Неактивная звезда -->
+                            </div>
+                            <div class="review-text " style="font-family: trebuchet ms; "><br>Заказала себе недавно электронные сигареты WAKA и осталась очень довольна!<br> Во-первых, устройство отличается крутым дизайном и удобной формой, во-вторых, были на связи в течении всей цепочки от оплаты счета до сверения
+                                кодов. Рекомендую всем, кто переходит на работу в белую. Доставили через 7 дней, как и говорили. Доставкой довольна.
+
+
+                            </div>
+                        </div>
+                        <h1 class="title-document">Документы</h1>
+                        <div class="container">
+
+                            <div class="column" id="column1">
+                                <a href="Новый-документ.pdf" download>
+                                    <img src="вк.png" alt="Картинка 1">
+                                    <p style="font-family: Arial Black;">Свидетельство Роспатента о торговой марке</p>
+                                </a>
+
+                                <a href="Новый-документ.pdf" download>
+                                    <img src="вк.png" alt="Картинка 2">
+                                    <p style="font-family: Arial Black;">Декларация о соответствии УПД с номерами</p>
+                                </a>
+
+                                <a href="Новый-документ.pdf" download>
+                                    <img src="вк.png" alt="Картинка 3">
+                                    <p style="font-family: Arial Black;">Честный знак</p>
+                                </a>
+                            </div>
+
+                            <div class="column" id="column2">
+                                <a href="Новый-документ.pdf" download>
+                                    <img src="вк.png" alt="Картинка 4">
+                                    <p style="font-family: Arial Black;">Декларация ЕАС</p>
+                                </a>
+
+                                <a href="Новый-документ.pdf" download>
+                                    <img src="вк.png" alt="Картинка 5">
+                                    <p style="font-family: Arial Black;">Сертификат Качества</p>
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <footer>
+                            <div class="contact-info " style="font-family: Arial Black; " id="contact ">
+                                <h2>Контактная информация</h2>
+                                <!-- Добавьте вашу контактную информацию здесь -->
+                            </div>
+
+                            <div class="social-icons ">
+
+                                <a href="https://vk.com/natrixd " target="_blank "><img src="вк.png " alt="VK " style="margin-right: 20px;"></a>
+                                <a href="https://web.telegram.org/k/ " target="_blank "><img src="тг.png " alt="Telegram "></a>
+                                <a href="https://www.figma.com/file/critQet4LBfgkezNCOu5Ff/TitanLab?type=design&node-id=80-87&mode=design&t=IAinTDluUz9KLlmh-0 " target="_blank "><img src="Ватсап.png " alt="WhatsApp " style="margin-left: 20px;"></a>
+                                <img src="лого с названием.png " alt="WhatsApp " style="margin-left: 70%; font-size: 24px; ">
+                            </div>
+                        </footer>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var downloadTrigger = document.getElementById("downloadTrigger");
+
+                                downloadTrigger.addEventListener("click", function() {
+                                    var downloadLink = document.createElement("a");
+                                    downloadLink.href = "Новый-документ.pdf"; // Замените на путь к вашему документу
+                                    downloadLink.download = "Типы.pdf"; // Замените на желаемое имя файла
+
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(downloadLink);
+                                });
+                            });
+                        </script>
+                        <script>
+                            // Отображение модального окна при загрузке страницы
+                            window.onload = function() {
+                                document.getElementById('ageModal').style.display = 'flex';
+                            };
+
+                            // Функция для обработки ответа "Да "
+                            function confirmAge() {
+                                document.getElementById('ageModal').style.display = 'none';
+                                document.querySelector('.blur-background').style.display = 'none'; // Скрываем мутный фон
+                                // Дополнительные действия при подтверждении возраста
+                            }
+
+                            // Функция для обработки ответа "Нет "
+                            function rejectAge() {
+                                alert('Вы должны быть старше 18 лет для доступа к сайту.');
+                                // Можно также перенаправить пользователя на другую страницу или выполнить другие действия
+                            }
+                        </script>
+                        <script>
+                            function openForm() {
+                                document.getElementById("myForm ").style.display = "block ";
+                                document.getElementById('.blur-background').style.display = "none ";
+                            }
+
+                            function closeForm() {
+                                document.getElementById("myForm ").style.display = "none ";
+                            }
+
+                            function submitForm() {
+                                var formData = new FormData(document.getElementById("applicationForm "));
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        // Ваши действия после успешной отправки формы
+                                        alert("Заявка успешно отправлена! ");
+                                        closeForm(); // Закрываем форму после успешной отправки
+                                    }
+                                };
+
+                                xhr.open("POST ", "processForm.php ", true);
+                                xhr.send(formData);
+                                php
+                                if ($_SERVER["REQUEST_METHOD "] == "POST ") {
+                                    $name = $_POST["name "];
+                                    $phone = $_POST["phone "];
+                                    $telegram = $_POST["telegram "];
+
+                                    $to = "dan4icprogame@gmail.com "; // Замените на ваш реальный адрес электронной почты
+                                    $subject = "Новая заявка ";
+                                    $message = "Имя: $name\nНомер телефона: $phone\nТелеграм: $telegram ";
+
+                                    mail($to, $subject, $message);
+
+                                    if (mail($to, $subject, $message)) {
+                                        "Заявка успешно отправлена! ";
+                                    } else {
+                                        "Ошибка при отправке заявки. ";
+                                    }
+                                }
+
+                            }
+
+                            function openForm() {
+                                document.getElementById("myForm").style.display = "block";
+                            }
+
+                            function closeForm() {
+                                document.getElementById("myForm").style.display = "none";
+                            }
+
+                            function submitForm() {
+                                var formData = new FormData(document.getElementById("applicationForm"));
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        // Ваши действия после успешной отправки формы
+                                        alert("Заявка успешно отправлена!");
+                                        closeForm(); // Закрываем форму после успешной отправки
+                                    }
+                                };
+
+                                xhr.open("POST", "processForm.php", true);
+                                xhr.send(formData);
+                            }
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                            function openProductDetails() {
+                                // Открывает новую страницу с подробной информацией о товаре
+                                window.open('product-details.html', '_blank');
+                            }
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                        </script>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // Получаем текущую корзину из localStorage
+                                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                                // Обновляем отображение корзины на странице
+                                updateCartView(cart);
+                            });
+
+                            function updateCartView(cart) {
+                                // Обновляем отображение корзины на странице
+                                // Например, можно вывести количество товаров или их общую стоимость
+                                console.log('Количество товаров в корзине:', cart.length);
+                            }
+                        </script>
+                        <script>
+                            const sliderImages = document.querySelectorAll('.imagenavigation')
+                            const slider = document.querySelector('.slider')
+                            let currentSlide = 0;
+
+                            function changeSlide(direction) {
+                                currentSlide += direction;
+                                if (currentSlide < 0) {
+                                    currentSlide = sliderImages.length - 1;
+                                } else if (currentSlide >= sliderImages.length) {
+                                    currentSlide = 0;
+                                }
+                                slider.style.transform = `translateX(-${currentSlide * sliderImages[0].clientWidth}px)`;
+                            }
+                            document.querySelector('.prev-btn').addEventListener('click', () => {
+                                changeSlide(-1);
+                            })
+                            document.querySelector('.next-btn').addEventListener('click', () => {
+                                changeSlide(1);
+                            })
+
+                            function changeSlide(direction) {
+                                if (direction === -1) {
+                                    // User clicked "previous" button
+                                    if (currentSlide === 0) {
+                                        // If it's the first slide, return and don't change the slide
+                                        return;
+                                    }
+                                    currentSlide--; // Decrease the index
+                                } else {
+                                    // User clicked "next" button
+                                    if (currentSlide === sliderImages.length - 1) {
+                                        // If it's the last slide, reset the index to 0
+                                        currentSlide = 0;
+                                    } else {
+                                        currentSlide++; // Increase the index
+                                    }
+                                }
+                                slider.style.transform = `translateX(-${currentSlide * sliderImages[0].clientWidth}px)`;
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+</body>
+
+
+</html>
